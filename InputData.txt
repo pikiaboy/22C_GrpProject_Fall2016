@@ -1,0 +1,26 @@
+SerialNumber	Make		FrameMaterial	FrameSize	Seat
+NKI00104	Nishiki		Steel		16		Sport Saddle
+02159280	Diamondback	Steel		18		Race Saddle
+26645		Huffy		Steel		18		Spring Saddle
+1170		Firmstrong	Steel		19		Spring Saddle
+32025		Kent		Steel		10		Vinyl
+UAG2611074	Firmstrong	Steel		19		Cruiser Saddle
+26645		Huffy		Steel		18		Spring Saddle
+02154020	Diamondback	Steel		26		Double Spring
+630045		Firmstrong	Steel		19		Leather Saddle
+G0178		GT		Steel		20		bio morphic
+NKI00514	Nishiki		Steel		17		Performance
+02153160	Diamondback	Steel		21		Deluxe Hybrid
+NKI00304	Nishiki		Steel		16		Comfort Saddle
+1400218		Titan		Alloy		18		vinyl
+66336		Huffy		Steel		18		padded seat
+26745		Huffy		Steel		18		comfort seat
+02159280	Diamondback	Aluminium	16		RaceSaddle
+G0136DSG	GT		Aluminium	13		GT MTB
+G0178		GT		Alloy		19		bio morphic
+02165070	Diamondback	Alloy		20		padded seat
+1358018		Titan		Alloy		19		vinyl
+02172130	Diamondback	Aluminium	16		Race Saddle
+02172140	Diamondback	Aluminium	20		Race Saddle
+15284		Firmstrong	Aluminium	17		Leather Saddle
+1153		Firmstrong	Alloy		19		Cruiser Saddle      
