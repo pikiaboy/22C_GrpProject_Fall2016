@@ -11,7 +11,7 @@ private:
 	string serialNumber;
 	string make;
 	string frameMaterial;
-	int frameSize;
+	string frameSize;
 	string saddle;
 
 public:
@@ -19,15 +19,37 @@ public:
 	const string getSerialNumber() { return serialNumber; };
 	const string getMake() { return make; };
 	const string getFrameMaterial() { return frameMaterial; };
-	const int getFrameSize() { return frameSize; };
+	const string getFrameSize() { return frameSize; };
 	const string getSaddle() { return saddle; };
 
 	//mutator
 	void setSerialNumber(string s) { serialNumber = s; };
 	void setMake(string m) { make = m; };
 	void setFrameMaterial(string f) { frameMaterial = f; };
-	void setFrameSize(int f) { frameSize = f; };
+	void setFrameSize(string f) { frameSize = f; };
 	void setSaddle(string s) { saddle = s; };
+
+	//operator overload
+	bool operator>(Bike b1) const
+	{
+		return serialNumber > b1.serialNumber;
+	}
+
+	bool operator==(Bike b1) const
+	{
+		return serialNumber == b1.serialNumber;
+	}
+
+
+	bool operator=(Bike b1) 
+	{
+		serialNumber = b1.serialNumber;
+		make = b1.make;
+		frameMaterial = b1.frameMaterial;
+		frameSize = b1.frameSize;
+		saddle = b1.saddle;
+		return true;
+	}
 
 	//constructor
 	Bike()
@@ -35,10 +57,10 @@ public:
 		serialNumber = "";
 		make = "";
 		frameMaterial = "";
-		frameSize = 0;
+		frameSize = "";
 		saddle = "";
 	};
-	Bike(string s, string m, string fM, int fS, string sa)
+	Bike(string s, string m, string fM, string fS, string sa)
 	{
 		serialNumber = s;
 		make = m;

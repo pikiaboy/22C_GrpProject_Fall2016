@@ -1,71 +1,68 @@
 #include <iostream>
 #include <fstream>
 #include "Bike.h"
+#include "BinarySearchTree.h"
 
-using namespace std; 
+using namespace std;
 
-void readFile(Bike array[],string);
+void readFile(BinarySearchTree<Bike>*, string);
+void outputFile(BinarySearchTree<Bike>*, string);
+void remove(BinarySearchTree<Bike>*);
 
 int main()
 {
-	Bike bikeList[100];
-	ifstream inFile; 
+	BinarySearchTree<Bike> * bikeST = new BinarySearchTree<Bike>;
+	ifstream inFile;
 	const char inputFileName[] = "InputData.txt";
-	readFile(bikeList, inputFileName);
+	const char outputFileName[] = "OutputData.txt";
+
+	readFile(bikeST, inputFileName);
 
 
-	return 0; 
+	bikeST->printInorderIndented();
+
+	system("pause");
+	return 0;
 }
 
+void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
+	cout << "Saving Updated List to File..." << endl;
+	 
+	cout << "Saved" << endl;
+}
 
-
-void readFile(Bike bikeList[] , string inputFileName)
+void remove(BinarySearchTree<Bike>* bikenarySearchTree)
 {
-	fstream inFile;
+	string target;
+	cout << "What would you like to remove?" << endl;
+	getline(cin, target, '\n');
+	bikenarySearchTree->remove(target);
 
-	string data = "";
-	int data2 = 0; 
-	int i = 0; //postion in list
+}
+
+void readFile(BinarySearchTree<Bike>* bikenarySearchTree, string inputFileName)
+{
+	string serialNumber, make, frameMaterial, frameSize, saddle;
+
+	fstream inFile;
 	inFile.open(inputFileName);
 
-	if (!inFile) 
+	if (!inFile)
 	{
-		cout << "error opening input file" << endl; 
-		exit(111); 
-	}
+		cout << "error opening input file" << endl;
+		exit(111);
+	};
 
-	getline(inFile, data); //geting rid of first line
-
-	while (!inFile.eof())
+	while (inFile.good())
 	{
-		
-		inFile >> data; 
-		bikeList[i].setSerialNumber(data);
-		
-		cout << data << " ";
-	
-		inFile >> data; 
-		bikeList[i].setMake(data);
+		inFile >> serialNumber >> make >> frameMaterial >> frameSize;
+		getline(inFile, saddle, '\n');
 
-		cout << data << " ";
 
-		inFile >> data; 
-		bikeList[i].setFrameMaterial(data);
-		
-		cout << data << " ";
+		Bike bicicleta(serialNumber, make, frameMaterial, frameSize, saddle);
 
-		inFile >> data2; 
-		bikeList[i].setFrameSize(data2);
-		
-		cout << data2 << " "; 
+		bikenarySearchTree->insert(bicicleta);
+	};
 
-		inFile >> data; 
-		bikeList[i].setSaddle(data); 
-		
-		cout << data << endl;
-		
-		i++; 
-	}
-	
-	cout << "Compelted File input!" << endl; 
-} 
+	cout << "Compelted File input!" << endl;
+}

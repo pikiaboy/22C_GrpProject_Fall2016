@@ -1,4 +1,3 @@
-SerialNumber	Make		FrameMaterial	FrameSize	Seat
 NKI00104	Nishiki		Steel		16		Sport-Saddle
 02159280	Diamondback	Steel		18		Race-Saddle
 26645		Huffy		Steel		18		Spring-Saddle
@@ -23,4 +22,4 @@ G0178		GT		Alloy		19		Bio-morphic-Saddle
 02172130	Diamondback	Aluminium	16		Race-Saddle
 02172140	Diamondback	Aluminium	20		Race-Saddle
 15284		Firmstrong	Aluminium	17		Leather-Saddle
-1153		Firmstrong	Alloy		19		Cruiser-Saddle      
+1153		Firmstrong	Alloy		19		Cruiser-Saddle   
