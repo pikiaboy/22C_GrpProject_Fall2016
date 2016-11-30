@@ -6,7 +6,7 @@
 using namespace std;
 
 template <class ItemType>
-class HashTable<ItemType>
+class HashTable
 {
 	
 

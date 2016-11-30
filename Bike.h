@@ -16,7 +16,11 @@ private:
 
 public:
 	//accessor
-	const string getSerialNumber() { return serialNumber; };
+
+	//since serial must be in int, converting to int
+	const int getSerialNumber();
+	//returns litearl serial
+	const string getSerialString() { return serialNumber; };
 	const string getMake() { return make; };
 	const string getFrameMaterial() { return frameMaterial; };
 	const string getFrameSize() { return frameSize; };
@@ -30,12 +34,12 @@ public:
 	void setSaddle(string s) { saddle = s; };
 
 	//operator overload
-	bool operator>(Bike b1) const
+	bool operator>(const Bike &b1) 
 	{
 		return serialNumber > b1.serialNumber;
 	}
 
-	bool operator==(Bike b1) const
+	bool operator==(const Bike &b1)
 	{
 		return serialNumber == b1.serialNumber;
 	}
@@ -70,5 +74,20 @@ public:
 	};
 
 };
+
+
+int const Bike::getSerialNumber()
+{
+	int total = 0; 
+
+	for (int i = 0; i < serialNumber.length(); i++)
+	{
+		total += serialNumber[i];
+	}
+	return total;
+
+}
+
+
 #endif
 //! BIKE_H

@@ -3,59 +3,28 @@
 //  hash
 //
 //  Created by Jasdeep Mundra on 11/28/16.
+//  Edited by Thomas Pham on 11/29/16.
 //  Copyright © 2016 Jasdeep Mundra. All rights reserved.
 //
 
 #ifndef HashHead_h
 #define HashHead_h
 #include <iostream>
+#include "Bike.h"
 
 // table size
 const int tableSize = 23;
 
 using namespace std;
-
-// class to hold all variables
-class Hash
-{
-private:
-    int serial;
-    string make;
-    string material;
-    int frameSize;
-    string seat;
-    
-public:
-    Hash();
-    
-    // get functions
-    int getSerial(){return serial;}
-    string getMake(){return make;}
-    string getMaterial(){return material;}
-    int getFrameSize(){return frameSize;}
-    string getSeat(){return seat;}
-    
-    // set functions
-    void setSerial(int x){x = serial;}
-    void setMake(string x){x = make;}
-    void setMaterial(string x){x = material;}
-    void setFrameSize(int x){x = frameSize;}
-    void setSeat(string x){x = seat;}
-    
-    ~Hash();
-    
-};
-
-
 class HashList
 {
 private:
     struct ListNode
     {
         // make variable for hash class with variables
-        Hash data;
+        Bike *data;
         ListNode *next;
-        ListNode (int key, Hash holder)
+        ListNode (int key, Bike *holder)
         {
             this->data = holder;
             this->next = NULL;
@@ -79,24 +48,10 @@ public:
             hashTable[i] = NULL;
         }
         
-        // not necessary
-        /*
-        head = new ListNode;
-        head->next = NULL;
-        
-        head->data.setSerial(0);
-        head->data.setFrameSize(0);
-  
-        head->data.getMake() = "";
-        head->data.getSeat() = "";
-        head->data.getMaterial() = "";
-         */
-        
-        
     };
     
     // insert function
-    void hashInsert(int key, Hash holder)
+    void hashInsert(int key, Bike *holder)
     {
         int hash = hashFunc(key);
         ListNode *prev = NULL;
@@ -128,14 +83,15 @@ public:
         // holder points to spot in hashtable array
         ListNode *holder = hashTable[hashVal];
         ListNode *prev = NULL;
+
         // if empty or key is not equal to serial number then show messages
-        if (holder == NULL || holder->data.getSerial() != key)
+        if (holder == NULL || holder->data->getSerialNumber() != key)
         {
             cout << "Nothing to delete." << endl;
         }
         
         // loop until end of linked list or if key matches up
-        while (holder->next != NULL || holder->data.getSerial() != key)
+        while (holder->next != NULL || holder->data->getSerialNumber() != key)
         {
             prev = holder;
             holder = holder->next;
@@ -163,13 +119,13 @@ public:
         while (holder != NULL)
         {
             // if the node serial number matches with the key then print all the info out
-            if (holder->data.getSerial() == key)
+            if (holder->data->getSerialNumber() == key)
             {
-                cout << holder->data.getSerial() << endl;
-                cout << holder->data.getMaterial() << endl;
-                cout << holder->data.getSeat() << endl;
-                cout << holder->data.getMake() << endl;
-                cout << holder->data.getFrameSize() << endl;
+                cout << "Serial number is: " << holder->data->getSerialNumber() << endl;
+                cout << "Frame Material is: " << holder->data->getFrameMaterial() << endl;
+                cout << "Saddle is: " << holder->data->getSaddle() << endl;
+                cout << "Make is: " << holder->data->getMake() << endl;
+                cout << "Frame size is: " << holder->data->getFrameSize() << endl;
             }
             // point to next node
             holder = holder->next;
@@ -206,16 +162,6 @@ public:
         
         delete hashTable;
         
-        /*
-        ListNode *nodePtr = head;
-        ListNode *nextNode;
-        while (nodePtr != NULL)
-        {
-            nextNode = nodePtr->next;
-            delete nodePtr;
-            nodePtr = nextNode;
-        }
-        */
     };
     
 };
