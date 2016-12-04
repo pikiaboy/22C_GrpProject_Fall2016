@@ -103,6 +103,8 @@ void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 
 
 //Remove should remove from the Hash too correct?
+// get the bike
+// detele from hash and bst and bst
 void remove(BinarySearchTree<Bike>* bikenarySearchTree) 
 {
 	Bike x;
@@ -113,6 +115,7 @@ void remove(BinarySearchTree<Bike>* bikenarySearchTree)
 	
 	x.setSerialNumber(target);
 	bikenarySearchTree->remove(x);
+
 }
 
 void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList *bikeHash, string inputFileName)
