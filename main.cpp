@@ -4,57 +4,77 @@
 #include "BinarySearchTree.h"
 #include "BinaryNode.h"
 #include "BinaryTree.h"
-#include "HashTable.h"
 #include "HashHead.h"
 
 using namespace std;
 
-void readFile(BinarySearchTree<Bike>*, HashList *bikeHash, string);
+void readFile(BinarySearchTree<Bike>*, HashList<Bike> *bikeHash, string);
 void outputFile(BinarySearchTree<Bike>*, string);
-void remove(BinarySearchTree<Bike>*);
+void remove(BinarySearchTree<Bike>*, HashList<Bike> *bikeHash);
 void about();
 
-void menu(BinarySearchTree<Bike>*, HashList*);
+void menu(BinarySearchTree<Bike>*, HashList<Bike>*);
+void options();
+
 
 int main()
 {
 	BinarySearchTree<Bike> * bikeST = new BinarySearchTree<Bike>;
-	HashList *bikeHash = new HashList();
+	HashList<Bike> *bikeHash = new HashList<Bike>();
 	ifstream inFile;
 	const char inputFileName[] = "InputData.txt";
 	const char outputFileName[] = "OutputData.txt";
 
 	readFile(bikeST, bikeHash, inputFileName);
 
+
+	int x = 279; 
+	
+	//This must be done in order to check if passed the serach
+	Bike bikes;
+	Bike * _bikes = &bikes;
+	bikeHash->hashSearch(279,_bikes);
+
+	cout << _bikes->getSerialString() << endl;
+
 	menu(bikeST, bikeHash);
 
-	bikeST->printInorderIndented();
-	
-	bikeHash->hashSearch(471);
-	bikeHash->hashDelete(471);
-	bikeHash->hashSearch(471);
+
 
 	system("pause");
 	return 0;
 }
 
+void options()
+{
+	cout << "~^&~!Please enter in a choice~^&~!" << endl;
+	cout << "P - Print BST as indented list to screen" << endl;
+	cout << "O - Save BST and Hash to output.txt" << endl;
+	cout << "D - Delete a node from BST and Hash" << endl;
+	cout << "S - Serach the BST or Hash" << endl;
+	cout << "A - About the Devs" << endl;
+	cout << "H - Help" << endl;
+	cout << "Q - Quit" << endl;
+}
 
-void menu(BinarySearchTree<Bike> *bikeBST, HashList *bikeHash )
+void menu(BinarySearchTree<Bike> *bikeBST, HashList<Bike> *bikeHash )
 {
 	string outFile = "output.txt";
 	char choice = ' ';
-	cout << "~^&~!Please enter in a choice~^&~!" << endl; 
-	cout << "P - Print BST as indented list to screen" << endl;
-	cout << "A - About the Devs" << endl;
-	cout << "S - Save BST and Hash to output.txt" << endl;
-	cout << "D - Delete a node from BST and Hash" << endl;
-	cout << "Q - Quit" << endl;
+
+	//display options
+	options();
 
 	while (choice != 'Q' || choice != 'q')
 	{
 		cin >> choice; 
 		switch (choice)
 		{
+		case 'H':
+		case 'h':
+			options();
+			break;
+
 		case 'P':
 		case 'p':
 			bikeBST->printInorderIndented();
@@ -62,18 +82,18 @@ void menu(BinarySearchTree<Bike> *bikeBST, HashList *bikeHash )
 
 		case 'A' :
 		case 'a':
-			//print about the devs. How do you want to structure this?
+			about();
 			break;
 
-		case 'S':
-		case 's':
+		case 'O':
+		case 'o':
 			outputFile(bikeBST, outFile);
 			break;
 
 		case 'D':
 		case 'd':
 			//this should also delete from the hash too correct?
-			remove(bikeBST);
+			remove(bikeBST, bikeHash);
 			break;
 
 		case 'Q':
@@ -81,9 +101,6 @@ void menu(BinarySearchTree<Bike> *bikeBST, HashList *bikeHash )
 			exit(111);
 			break;
 
-		default: 
-			cout << "Invalid input" << endl;
-			break;
 		}
 	}
 
@@ -91,8 +108,9 @@ void menu(BinarySearchTree<Bike> *bikeBST, HashList *bikeHash )
 
 void about()
 {
-	// just cout the names and date of making the code? 
-	// how do we want to structure this?
+	cout << "Avi, Jasdeep, Christian, Thomas" << endl;
+	cout << "22C Delia Gârbacea" << endl;
+	cout << "Winter 2016" << endl;
 }
 
 void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
@@ -105,20 +123,31 @@ void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 //Remove should remove from the Hash too correct?
 // get the bike
 // detele from hash and bst and bst
-void remove(BinarySearchTree<Bike>* bikenarySearchTree) 
+void remove(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash)
 {
 	Bike x;
 
 	string target;
 	cout << "What would you like to remove?" << endl;
-	getline(cin, target, '\n');
+	cin >> target;
 	
 	x.setSerialNumber(target);
-	bikenarySearchTree->remove(x);
+	
+
+
+	//bikeHash->hashSearch(x.getSerialNumber());
+
+	//BST deleteing half of tree every time.
+	if (bikenarySearchTree->remove(x))
+		cout << "Deleted" << endl;
+	else
+		cout << "Error in deleting" << endl;
+
+	
 
 }
 
-void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList *bikeHash, string inputFileName)
+void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash, string inputFileName)
 {
 	string serialNumber, make, frameMaterial, frameSize, saddle;
 

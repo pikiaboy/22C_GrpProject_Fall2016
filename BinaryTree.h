@@ -49,7 +49,7 @@ void BinaryTree<ItemType>::_indentedInorder(BinaryNode<ItemType>* nodePtr, int l
 		level++;
 		_indentedInorder(nodePtr->getRightPtr(), level);
 		Bike bike = nodePtr->getItem();
-		cout << setw(10 * (level - 1)) << level << ". SerialNumber: " << bike.getSerialNumber() << " Name: " << bike.getMake() << endl;
+		cout << setw(10 * (level - 1)) << level << ". SerialNumber: " << bike.getSerialNumber() << " Make: " << bike.getMake() << endl;
 		_indentedInorder(nodePtr->getLeftPtr(), level);
 	}
 }
