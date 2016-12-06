@@ -44,6 +44,11 @@ public:
 		return serialNumber == b1.serialNumber;
 	}
 
+	bool operator<(const Bike &b1)
+	{
+		return serialNumber < b1.serialNumber;
+	}
+
 
 	bool operator=(Bike b1) 
 	{

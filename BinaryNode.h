@@ -26,6 +26,8 @@ public:
 	BinaryNode<ItemType>* getLeftPtr() const { return leftPtr; }
 	BinaryNode<ItemType>* getRightPtr() const { return rightPtr; }
 
+	ItemType getMinValue() const { if (left == 0) { return item; } else { return leftPtr->getMinValue()(); } };
+
 	bool isLeaf() const { return (leftPtr == 0 && rightPtr == 0); }
 };
 

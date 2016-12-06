@@ -43,6 +43,7 @@ bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry)
 {
 	BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
 	this->rootPtr = _insert(this->rootPtr, newNodePtr);
+	count++;
 	return true;
 }
 
@@ -51,6 +52,7 @@ bool BinarySearchTree<ItemType>::remove(const ItemType & target)
 {
 	bool isSuccessful = false;
 	this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
+	count--;
 	return isSuccessful;
 }
 
