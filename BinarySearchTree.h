@@ -17,7 +17,7 @@ private:
 
 	BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNode);
 	BinaryNode<ItemType>* undoSave(BinaryNode<ItemType>* nodePtr);
-	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, const ItemType target, bool & success);
+	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, ItemType target, bool & success);
 	BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
 	BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr, const ItemType & target) const;
 	BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr,
@@ -33,6 +33,7 @@ public:
 		delete undoStack;
 	}
 	void undo();
+	void clearUndo();
 	bool insert(const ItemType & newEntry);
 	bool remove(const ItemType & anEntry);
 
@@ -43,14 +44,17 @@ bool BinarySearchTree<ItemType>::insert(const ItemType & newEntry)
 {
 	BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newEntry);
 	this->rootPtr = _insert(this->rootPtr, newNodePtr);
+	count++;
 	return true;
 }
+
 
 template<class ItemType>
 bool BinarySearchTree<ItemType>::remove(const ItemType & target)
 {
 	bool isSuccessful = false;
 	this->rootPtr = _remove(this->rootPtr, target, isSuccessful);
+	count--;
 	return isSuccessful;
 }
 
@@ -82,8 +86,20 @@ void BinarySearchTree<ItemType>::undo()
 		undoStack->pop(oldNodeData);
 		insert(oldNodeData);
 	}
+	cout << "Undo Complete" << endl;
 	return;
 
+}
+
+template <class ItemType>
+void BinarySearchTree<ItemType>::clearUndo()
+{
+	ItemType oldNodeData;
+	while(!undoStack->isEmpty())
+	{
+		undoStack->pop(oldNodeData);
+	}
+	return;
 };
 
 template<class ItemType>
@@ -93,13 +109,12 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::undoSave(BinaryNode<ItemType>*
 	cout << "item hopefully saved" << endl;
 	oldNodeData = nodePtr->getItem();
 	undoStack->push(oldNodeData);
-	deleteNode(nodePtr);
-	return 0;
+	return deleteNode(nodePtr);;
 }
 
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr,
-	const ItemType target,
+	ItemType target,
 	bool & success)
 
 {
@@ -108,9 +123,9 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
 		success = false;
 		return 0;
 	}
-	if (nodePtr->getItem()> target)
+	if (nodePtr->getItem() > target)
 		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
-	else if (nodePtr->getItem()> target)
+	else if (nodePtr->getItem() < target)
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
 	else
 	{
@@ -120,6 +135,8 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
 	return nodePtr;
 }
 
+
+//deletes a node from the tree
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::deleteNode(BinaryNode<ItemType>* nodePtr)
 {
@@ -167,7 +184,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 		return nodePtr;
 	}
 }
-
 
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>* nodePtr,

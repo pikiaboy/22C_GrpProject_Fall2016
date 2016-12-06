@@ -41,7 +41,12 @@ public:
 
 	bool operator==(const Bike &b1)
 	{
-		return serialNumber == b1.serialNumber;
+		return ((serialNumber == b1.serialNumber) || (make == b1.make));
+	}
+
+	bool operator<(const Bike &b1)
+	{
+		return serialNumber < b1.serialNumber;
 	}
 
 
