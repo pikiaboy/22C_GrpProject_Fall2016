@@ -132,7 +132,7 @@ void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 // detele from hash and bst and bst
 void remove(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash)
 {
-	Bike *removeBike = 0;
+	Bike *removeBike = new Bike();
 
 	string target;
 	cout << "What would you like to remove?" << endl;
@@ -149,6 +149,7 @@ void remove(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash
 		cout << "Deleted" << endl;
 	else
 		cout << "Error in deleting" << endl;
+	delete removeBike;
 }
 
 void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash, string inputFileName)

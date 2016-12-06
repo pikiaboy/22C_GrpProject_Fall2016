@@ -123,9 +123,9 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* 
 		success = false;
 		return 0;
 	}
-	if (nodePtr->getItem() > target)
+	if (*nodePtr->getItem() > *target)
 		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success));
-	else if (nodePtr->getItem() < target)
+	else if (*nodePtr->getItem() < *target)
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success));
 	else
 	{
@@ -161,7 +161,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::deleteNode(BinaryNode<ItemType
 	}
 	else
 	{
-		ItemType* newNodeValue = 0;
+		ItemType* newNodeValue = new ItemType;
 		nodePtr->setRightPtr(removeLeftmostNode(nodePtr->getRightPtr(), newNodeValue));
 		nodePtr->setItem(newNodeValue);
 		return nodePtr;
@@ -175,7 +175,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 {
 	if (nodePtr->getLeftPtr() == 0)
 	{
-		successor = nodePtr->getItem();
+		*successor = *nodePtr->getItem();
 		return deleteNode(nodePtr);
 	}
 	else
@@ -193,9 +193,9 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>*
 	if (nodePtr == 0)
 		return 0;
 	//	cout << "Searching" << nodePtr->getItem() << endl;
-	if (nodePtr->getItem() == target)
+	if (*nodePtr->getItem() == *target)
 		return nodePtr;
-	if (target > nodePtr->getItem())
+	if (*target > *nodePtr->getItem())
 		return findNode(nodePtr->getRightPtr(), target);
 	return findNode(nodePtr->getLeftPtr(), target);
 }
