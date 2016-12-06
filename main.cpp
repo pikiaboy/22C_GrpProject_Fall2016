@@ -132,20 +132,20 @@ void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 // detele from hash and bst and bst
 void remove(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash)
 {
-	Bike x;
+	Bike *removeBike = 0;
 
 	string target;
 	cout << "What would you like to remove?" << endl;
 	cin >> target;
 	
-	x.setSerialNumber(target);
+	removeBike->setSerialNumber(target);
 	
 
 
 	//bikeHash->hashSearch(x.getSerialNumber());
 
 	//BST deleteing half of tree every time.
-	if (bikenarySearchTree->remove(x))
+	if (bikenarySearchTree->remove(removeBike))
 		cout << "Deleted" << endl;
 	else
 		cout << "Error in deleting" << endl;
@@ -176,7 +176,7 @@ void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHa
 		bikePointer->setFrameSize(frameSize);
 		bikePointer->setSaddle(saddle);
 
-		Bike bicicleta(serialNumber, make, frameMaterial, frameSize, saddle);
+		Bike* bicicleta = new Bike(serialNumber, make, frameMaterial, frameSize, saddle);
 
 		bikenarySearchTree->insert(bicicleta);
 
