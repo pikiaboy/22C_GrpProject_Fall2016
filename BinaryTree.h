@@ -27,7 +27,6 @@ public:
 	bool isEmpty() const { return count == 0; }
 	int size() const { return count; }
 	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; }
-	void _printIndented(void visit(ItemType &), BinaryNode<ItemType>* node, int level);
 	virtual bool insert(const ItemType & newData) = 0;
 	virtual bool remove(const ItemType & data) = 0;
 	void printInorderIndented();
@@ -39,7 +38,7 @@ void BinaryTree<ItemType>::printInorderIndented()
 	BinaryNode<ItemType> *node = rootPtr;
 	int level = 0;
 	_indentedInorder(node, level);
-	cout << "There are " << count << "nodes in the tree." << endl;
+	cout << "There are " << count << " nodes in the tree." << endl;
 }
 
 template<class ItemType>

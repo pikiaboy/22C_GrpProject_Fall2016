@@ -53,6 +53,7 @@ void options()
 	cout << "D - Delete a node from BST and Hash" << endl;
 	cout << "S - Serach the BST or Hash" << endl;
 	cout << "A - About the Devs" << endl;
+	cout << "U - Undo Delete since last save" << endl;
 	cout << "H - Help" << endl;
 	cout << "Q - Quit" << endl;
 }
@@ -64,7 +65,8 @@ void menu(BinarySearchTree<Bike> *bikeBST, HashList<Bike> *bikeHash )
 
 	//display options
 	options();
-
+	cout << ">> ";
+	
 	while (choice != 'Q' || choice != 'q')
 	{
 		cin >> choice; 
@@ -89,7 +91,10 @@ void menu(BinarySearchTree<Bike> *bikeBST, HashList<Bike> *bikeHash )
 		case 'o':
 			outputFile(bikeBST, outFile);
 			break;
-
+		case 'u':
+		case 'U':
+			bikeBST->undo();
+			break;
 		case 'D':
 		case 'd':
 			//this should also delete from the hash too correct?
@@ -116,6 +121,8 @@ void about()
 void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 	cout << "Saving Updated List to File..." << endl;
 	 
+
+	bikenarySearchTree->clearUndo();
 	cout << "Saved" << endl;
 }
 
@@ -142,9 +149,6 @@ void remove(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash
 		cout << "Deleted" << endl;
 	else
 		cout << "Error in deleting" << endl;
-
-	
-
 }
 
 void readFile(BinarySearchTree<Bike>* bikenarySearchTree, HashList<Bike> *bikeHash, string inputFileName)
