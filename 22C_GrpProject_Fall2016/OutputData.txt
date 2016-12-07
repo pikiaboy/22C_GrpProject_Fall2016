@@ -1,5 +1,5 @@
 Serial         Make                Frame               Size      Saddle              
-26645          Huffy               Steel               18         Spring-Saddle      
+15284          Firmstrong          Aluminium           17         Leather-Saddle     
 02159280       Diamondback         Aluminium           16         Race-Saddle        
 G0178          GT                  Steel               20         bio-morphic-Saddle 
 02153160       Diamondback         Steel               21         Deluxe-Hybrid-Saddle
@@ -22,5 +22,6 @@ G0136DSG       GT                  Aluminium           13         GT-MTB
 NKI00104       Nishiki             Steel               16         Sport-Saddle       
 NKI00514       Nishiki             Steel               17         Performance-Saddle 
 1170           Firmstrong          Steel               19         Spring-Saddle      
+26645          Huffy               Steel               18         Spring-Saddle      
 NKI00514       Nishiki             Steel               17         Performance-Saddle 
 1153           Firmstrong          Alloy               19         Cruiser-Saddle     

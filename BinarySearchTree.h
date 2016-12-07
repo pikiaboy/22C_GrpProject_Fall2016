@@ -91,10 +91,10 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType> *
 		success = false;
 		return 0;
 	}
-	if (isGreater(nodePtr->getItem() , target))
-		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack, undoStack));
-	else if (isGreater(target, nodePtr->getItem()))
+	if (isGreater(target, nodePtr->getItem()))
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, isGreater, deleteStack, undoStack));
+	else if (isGreater(nodePtr->getItem() , target))
+		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack, undoStack));
 	else
 	{
 		deleteStack->push(nodePtr->getItem());
