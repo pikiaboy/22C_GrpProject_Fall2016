@@ -113,12 +113,13 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::undoSave(BinaryNode<ItemType>*
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType>* nodePtr, ItemType * target, bool & success, bool isGreater(ItemType data1, ItemType data2))
 {
+
 	if (nodePtr == 0)
 	{
 		success = false;
 		return 0;
 	}
-	if (isGreater(*nodePtr->getItem(), *target))
+	if (isGreater(*nodePtr->getItem() , *target))
 		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater));
 	else if (isGreater(*target, *nodePtr->getItem()))
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, isGreater));
@@ -187,9 +188,9 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>*
 	if (nodePtr == 0)
 		return 0;
 	//	cout << "Searching" << nodePtr->getItem() << endl;
-	if (*nodePtr->getItem() == *target)
+	if (isEqual(*nodePtr->getItem(), *target))
 		return nodePtr;
-	if (*target > *nodePtr->getItem())
+	if (isGreater(*target, *nodePtr->getItem()))
 		return findNode(nodePtr->getRightPtr(), target);
 	return findNode(nodePtr->getLeftPtr(), target);
 }

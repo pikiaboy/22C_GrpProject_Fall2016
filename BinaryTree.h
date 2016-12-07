@@ -29,6 +29,7 @@ public:
 	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; };
 	virtual bool insert(ItemType * newEntry, bool isGreater(ItemType data1, ItemType data2)) = 0;
 	virtual bool remove(ItemType * anEntry, bool isGreater(ItemType data1, ItemType data2)) = 0;
+	virtual void undo(bool isGreater(ItemType data1, ItemType data2)) = 0;
 	void printInorderIndented();
 };
 
@@ -48,7 +49,7 @@ void BinaryTree<ItemType>::_indentedInorder(BinaryNode<ItemType>* nodePtr, int l
 	{
 		level++;
 		_indentedInorder(nodePtr->getRightPtr(), level);
-		Bike *bike = nodePtr->getItem();
+		Bike *bike = *nodePtr->getItem();
 		cout << setw(10 * (level - 1)) << level << ". SerialNumber: " << bike->getSerialString() << " Make: " << bike->getMake() << endl;
 		_indentedInorder(nodePtr->getLeftPtr(), level);
 	}
