@@ -35,9 +35,10 @@ bool isGreaterEqualMake(Bike* obj1, Bike* obj2)
 void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike> *bikeHash, string);
 void outputFile(BinarySearchTree<Bike*>*, string, Stack<Bike*>*, Stack<Bike*>*);
 void remove(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*,  HashList<Bike> *bikeHash, Stack<Bike*>*, Stack<Bike*>*);
-void removeSecondaryKey(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*);
+//void removeSecondaryKey(BinarySearchTree<Bike*>* bikeMakeSt, BinarySearchTree<Bike*>* bikeSerialSt, Stack<Bike*> * undoStackMake, Stack<Bike*> * undoStackSerial);
 void about();
 void undo(Stack<Bike*> *, Stack<Bike*>*, BinarySearchTree<Bike*> *, BinarySearchTree<Bike*>*);
+void undoClear(Stack<Bike*>*, Stack<Bike*>*);
 void menu(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike>*, Stack<Bike*>*, Stack<Bike*>*);
 void options();
 
@@ -133,7 +134,7 @@ void menu(BinarySearchTree<Bike*> *bikeBST, BinarySearchTree<Bike*> *bikeMakeST,
 			break;
 		case 'E':
 		case 'e':
-			//removeSecondaryKey(bikeBST, bikeMakeST);
+			//removeSecondaryKey(bikeBST, bikeMakeST, undoStackSerial, undoStackMake);
 			break;
 		case 'Q':
 		case 'q':
@@ -166,17 +167,26 @@ void undo(Stack<Bike*> * undoStackSerial, Stack<Bike*> * undoStackMake, BinarySe
 	{
 		Bike * bikeMake = new Bike;
 		undoStackMake->pop(bikeMake);
-
 	}
 
 }
 
+void undoClear(Stack<Bike*>* undoStackSerial, Stack<Bike*>* undoStackMake)
+{
+	while(!undoStackSerial->isEmpty())
+	{
+		Bike * bike = new Bike;
+		undoStackSerial->pop(bike);
+		undoStackMake->pop(bike);
+		delete bike;
+	}
+}
 
 void outputFile(BinarySearchTree<Bike*>* bikenarySearchTree, string fileName, Stack<Bike*> *undoStackSerial, Stack<Bike*> *undoStackMake) {
 	cout << "Saving Updated List to File..." << endl;
 	 
 
-	//bikenarySearchTree->clearUndo(undoStack);
+	undoClear(undoStackSerial, undoStackMake);
 	cout << "Saved" << endl;
 }
 
@@ -218,28 +228,29 @@ void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>
 
 }
 
-//void removeSecondaryKey(BinarySearchTree<Bike*>* bikeMakeSt, BinarySearchTree<Bike*>* bikeSerialSt)
+//void removeSecondaryKey(BinarySearchTree<Bike*>* bikeMakeSt, BinarySearchTree<Bike*>* bikeSerialSt, Stack<Bike*> * undoStackMake, Stack<Bike*> * undoStackSerial)
 //{
-//	Bike *removeBike = new Bike();
 //	Stack<Bike*> *deleteStack = new Stack<Bike*>;
+//	bool success = true;
 //
 //	string target;
 //	cout << "What would you like to remove?" << endl;
 //	cin >> target;
 //
-//	removeBike->setMake(target);
-//
-//	while(bikeMakeSt->remove(removeBike, isGreaterMake, deleteStack, undoStack))
+//	while(success)
 //	{
+//		Bike *removeBike = new Bike();
+//		removeBike->setMake(target);
 //		cout << "Item deleted." << endl;
+//		success = bikeMakeSt->remove(removeBike, isGreaterMake, deleteStack, undoStackMake);
 //	}
 //
-//	while (!deleteStack->isEmpty())
-//	{
-//		deleteStack->pop(removeBike);
-//		bikeSerialSt->remove(removeBike, isGreaterSerial, deleteStack, undoStack);
-//		deleteStack->pop(removeBike);
-//	}
+//	//while (!deleteStack->isEmpty())
+//	//{
+//	//	deleteStack->pop(removeBike);
+//	//	bikeSerialSt->remove(removeBike, isGreaterSerial, deleteStack, undoStackSerial);
+//	//	deleteStack->pop(removeBike);
+//	//}
 //
 //
 //}
