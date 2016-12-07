@@ -26,9 +26,9 @@ public:
 
 	bool isEmpty() const { return count == 0; }
 	int size() const { return count; }
-	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; }
-	virtual bool insert(const ItemType & newData) = 0;
-	virtual bool remove(const ItemType & data) = 0;
+	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; };
+	virtual bool insert(ItemType * newData) = 0;
+	virtual bool remove(ItemType * data) = 0;
 	void printInorderIndented();
 };
 
@@ -48,8 +48,8 @@ void BinaryTree<ItemType>::_indentedInorder(BinaryNode<ItemType>* nodePtr, int l
 	{
 		level++;
 		_indentedInorder(nodePtr->getRightPtr(), level);
-		Bike bike = nodePtr->getItem();
-		cout << setw(10 * (level - 1)) << level << ". SerialNumber: " << bike.getSerialString() << " Make: " << bike.getMake() << endl;
+		Bike *bike = nodePtr->getItem();
+		cout << setw(10 * (level - 1)) << level << ". SerialNumber: " << bike->getSerialString() << " Make: " << bike->getMake() << endl;
 		_indentedInorder(nodePtr->getLeftPtr(), level);
 	}
 }
