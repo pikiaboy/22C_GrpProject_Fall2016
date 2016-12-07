@@ -23,7 +23,6 @@ int main()
 	HashList<Bike> *bikeHash = new HashList<Bike>();
 	ifstream inFile;
 	const char inputFileName[] = "InputData.txt";
-	const char outputFileName[] = "OutputData.txt";
 
 	readFile(bikeST, bikeHash, inputFileName);
 
@@ -60,7 +59,7 @@ void options()
 
 void menu(BinarySearchTree<Bike> *bikeBST, HashList<Bike> *bikeHash )
 {
-	string outFile = "output.txt";
+	string outFile = "OutputData.txt";
 	char choice = ' ';
 
 	//display options
@@ -121,6 +120,16 @@ void about()
 void outputFile(BinarySearchTree<Bike>* bikenarySearchTree, string fileName) {
 	cout << "Saving Updated List to File..." << endl;
 	 
+	ofstream outFile; 
+
+	outFile.open(fileName);
+
+	if (!outFile)
+	{
+		cout << "Error with output file" << endl;
+	}
+
+	outFile << "Hello!" << endl;
 
 	bikenarySearchTree->clearUndo();
 	cout << "Saved" << endl;
