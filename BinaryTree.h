@@ -27,8 +27,8 @@ public:
 	bool isEmpty() const { return count == 0; }
 	int size() const { return count; }
 	void clear() { destroyTree(rootPtr); rootPtr = 0; count = 0; };
-	virtual bool insert(ItemType * newData) = 0;
-	virtual bool remove(ItemType * data) = 0;
+	virtual bool insert(ItemType * newEntry, bool isGreater(ItemType data1, ItemType data2)) = 0;
+	virtual bool remove(ItemType * anEntry, bool isGreater(ItemType data1, ItemType data2)) = 0;
 	void printInorderIndented();
 };
 
