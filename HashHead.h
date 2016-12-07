@@ -22,16 +22,15 @@ private:
 	struct ListNode
 	{
 		// make variable for hash class with variables
-		ItemType *data;
+		ItemType data;
 		ListNode *next;
-		ListNode(ItemType *holder)
+		ListNode(ItemType holder)
 		{
 			this->data = holder;
 			this->next = NULL;
 		}
 
 	};
-	ListNode *head;
 	// hash table pointer
 	ListNode** hashTable;
 
@@ -53,11 +52,11 @@ public:
 	//print hash
 	void hashPrint();
 	// insert function
-	void hashInsert(int key, ItemType *holder);
+	void hashInsert(int key, ItemType holder);
 	// delete function
 	void hashDelete(int key);
-	bool hashSearch(int key, ItemType *&bikes);
-	
+	bool hashSearch(int key, ItemType &bikes);
+
 	// compute hash index
 	int hashFunc(int key);
 
@@ -87,6 +86,7 @@ void HashList<ItemType>::hashPrint()
 {
 	ListNode* holder;
 	cout << "Printed in Hash Sequence: " << endl;
+	int count = 0;
 	for (int i = 0; i < tableSize; i++)
 	{
 		holder = hashTable[i];
@@ -94,11 +94,15 @@ void HashList<ItemType>::hashPrint()
 		while (holder != NULL)
 		{
 			cout << "Bike: ";
-			cout << holder->data->getSerialString();
+			cout << holder->data->getSerialString() << " ";
 			cout << holder->data->getMake();
 			cout << endl;
+			holder = holder->next;
+			count++;
 		}
+
 	}
+	cout << "The total nodes is: " << count << endl;
 }
 
 
@@ -133,7 +137,7 @@ void HashList<ItemType>::hashDelete(int key)
 
 //changed to return an item instead of cout'ing everything
 template<class ItemType>
-bool HashList<ItemType>::hashSearch(int key, ItemType *&bikes)
+bool HashList<ItemType>::hashSearch(int key, ItemType &bikes)
 {
 
 	int address;
@@ -171,31 +175,30 @@ int HashList<ItemType>::hashFunc(int key)
 }
 
 template <class ItemType>
-void HashList<ItemType>::hashInsert(int key, ItemType *holder)
+void HashList<ItemType>::hashInsert(int key, ItemType holder)
 {
 	int address = hashFunc(key);
 	ListNode *prev = NULL;
-	hashTable[address] = new ListNode(holder);
+	//hashTable[address] = new ListNode(holder);
 	ListNode *entry = hashTable[address];
 
+
+	//If the array address is empty
+	if (entry == NULL)
+	{
+		hashTable[address] = new ListNode(holder);
+		return;
+	}
+
+	//if address is not null, traverse till end of list
 	while (entry != NULL)
 	{
 		prev = entry;
 		entry = entry->next;
 	}
-
-	if (entry == NULL)
-	{
-		entry = new ListNode(holder);
-		if (prev == NULL)
-		{
-			hashTable[address] = entry;
-		}
-		else
-			prev->next = entry;
-	}
-	else
-		entry->data = holder;
+	// allocate new node and link the nodes
+	entry = new ListNode(holder);
+	prev->next = entry;
 
 };
 

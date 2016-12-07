@@ -32,13 +32,13 @@ bool isGreaterEqualMake(Bike* obj1, Bike* obj2)
 }
 
 
-void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike> *bikeHash, string);
+void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*> *bikeHash, string);
 void outputFile(BinarySearchTree<Bike*>*, string, Stack<Bike*>*, Stack<Bike*>*);
-void remove(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*,  HashList<Bike> *bikeHash, Stack<Bike*>*, Stack<Bike*>*);
+void remove(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*,  HashList<Bike*> *bikeHash, Stack<Bike*>*, Stack<Bike*>*);
 void removeSecondaryKey(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*);
 void about();
 void undo(Stack<Bike*> *, Stack<Bike*>*, BinarySearchTree<Bike*> *, BinarySearchTree<Bike*>*);
-void menu(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike>*, Stack<Bike*>*, Stack<Bike*>*);
+void menu(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*>*, Stack<Bike*>*, Stack<Bike*>*);
 void options();
 
 int main()
@@ -47,7 +47,7 @@ int main()
 	BinarySearchTree<Bike*> * bikeMakeSt = new BinarySearchTree<Bike*>;
 	Stack<Bike*> *undoStackSerial = new Stack<Bike*>;
 	Stack<Bike*> *undoStackMake = new Stack<Bike*>;
-	HashList<Bike> *bikeHash = new HashList<Bike>;
+	HashList<Bike*> *bikeHash = new HashList<Bike*>;
 	ifstream inFile;
 	const char inputFileName[] = "InputData.txt";
 
@@ -58,10 +58,10 @@ int main()
 	
 	//This must be done in order to check if passed the serach
 	Bike bikes;
-	//Bike * _bikes = &bikes;
-	//bikeHash->hashSearch(279,_bikes);
+	Bike * _bikes = &bikes;
+	bikeHash->hashSearch(279,_bikes);
 
-	//cout << _bikes->getSerialString() << endl;
+	cout << _bikes->getSerialString() << endl;
 
 	menu(bikeST, bikeMakeSt, bikeHash, undoStackSerial, undoStackMake);
 
@@ -84,7 +84,7 @@ void options()
 	cout << "Q - Quit" << endl;
 }
 
-void menu(BinarySearchTree<Bike*> *bikeBST, BinarySearchTree<Bike*> *bikeMakeST, HashList<Bike> *bikeHash, Stack<Bike*> *undoStackSerial, Stack<Bike*> *undoStackMake)
+void menu(BinarySearchTree<Bike*> *bikeBST, BinarySearchTree<Bike*> *bikeMakeST, HashList<Bike*> *bikeHash, Stack<Bike*> *undoStackSerial, Stack<Bike*> *undoStackMake)
 {
 	string outFile = "OutputData.txt";
 	char choice = ' ';
@@ -193,7 +193,7 @@ void outputFile(BinarySearchTree<Bike*>* bikenarySearchTree, string fileName, St
 //Remove should remove from the Hash too correct?
 // get the bike
 // detele from hash and bst and bst
-void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>* bikeMakeTree,HashList<Bike> *bikeHash, Stack<Bike*>* undoStackSerial, Stack<Bike*>* undoStackMake)
+void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>* bikeMakeTree,HashList<Bike*> *bikeHash, Stack<Bike*>* undoStackSerial, Stack<Bike*>* undoStackMake)
 {
 	Stack<Bike*> *deleteStack = new Stack<Bike*>;
 
@@ -253,7 +253,7 @@ void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>
 //
 //}
 
-void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*> * bikeMakeSt, HashList<Bike> *bikeHash, string inputFileName)
+void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*> * bikeMakeSt, HashList<Bike*> *bikeHash, string inputFileName)
 {
 	string serialNumber, make, frameMaterial, frameSize, saddle;
 
@@ -276,7 +276,7 @@ void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike
 		bikenarySearchTree->insert(bicicleta, isGreaterSerial);
 		bikeMakeSt->insert(bicicleta, isGreaterMake);
 
-		//bikeHash->hashInsert(bicicleta->getSerialNumber(), bicicleta);
+		bikeHash->hashInsert(bicicleta->getSerialNumber(), bicicleta);
 	};
 
 	cout << "Compelted File input!" << endl;
