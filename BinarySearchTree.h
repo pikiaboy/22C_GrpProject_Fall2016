@@ -12,11 +12,10 @@ template<class ItemType>
 class BinarySearchTree : public BinaryTree<ItemType>
 {
 private:
-	Stack<ItemType>* undoStack;
 
-	BinaryNode<ItemType>* undoSave(BinaryNode<ItemType>* nodePtr);
+	BinaryNode<ItemType>* undoSave(BinaryNode<ItemType>* nodePtr, Stack<ItemType> * undoStack);
 	BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNodePtr, bool isGreater(ItemType data1, ItemType data2));
-	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, ItemType target, bool & success, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType>* deleteStack);
+	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, ItemType target, bool & success, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType>* deleteStack, Stack<ItemType> * undoStack);
 	BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
 	BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr, ItemType * target, bool isGreater(ItemType data1, ItemType data2), bool isEqual(ItemType data1, ItemType data2)) const;
 	BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr,
@@ -25,16 +24,14 @@ private:
 public:
 	BinarySearchTree()
 	{
-		undoStack = new Stack<ItemType>;
 	}
 	~BinarySearchTree()
 	{
-		delete undoStack;
 	}
-	void undo(bool isGreater(ItemType data1, ItemType data2));
+	//void undo(bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * undoStack);
 	bool insert(ItemType newEntry, bool isGreater(ItemType data1, ItemType data2));
-	bool remove(ItemType target, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * deleteStack);
-	void clearUndo();
+	bool remove(ItemType target, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * deleteStack, Stack<ItemType> * undoStack);
+	//void clearUndo(Stack<ItemType> * undoStack);
 
 };
 
@@ -49,10 +46,10 @@ bool BinarySearchTree<ItemType>::insert(ItemType newEntry, bool isGreater(ItemTy
 
 
 template<class ItemType>
-bool BinarySearchTree<ItemType>::remove(ItemType target, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * deleteStack)
+bool BinarySearchTree<ItemType>::remove(ItemType target, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * deleteStack, Stack<ItemType> * undoStack)
 {
 	bool isSuccessful = false;
-	this->rootPtr = _remove(this->rootPtr, target, isSuccessful, isGreater, deleteStack);
+	this->rootPtr = _remove(this->rootPtr, target, isSuccessful, isGreater, deleteStack, undoStack);
 	if (isSuccessful)
 		count--;
 	return isSuccessful;
@@ -74,44 +71,44 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 	return nodePtr;
 
 }
+//
+//template<class ItemType>
+//void BinarySearchTree<ItemType>::undo(bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * undoStack)
+//{
+//	Bike *oldNodeData = new Bike;
+//	while (!undoStack->isEmpty())
+//	{
+//		undoStack->pop(oldNodeData);
+//		insert(oldNodeData, isGreater);
+//	}
+//	return;
+//
+//}
+//
+//template <class ItemType>
+//void BinarySearchTree<ItemType>::clearUndo(Stack<ItemType> * undoStack)
+//{
+//	Bike * oldNodeData = new Bike();
+//	while(!undoStack->isEmpty())
+//	{
+//		undoStack->pop(oldNodeData);
+//	}
+//	return;
+//};
+
 
 template<class ItemType>
-void BinarySearchTree<ItemType>::undo(bool isGreater(ItemType data1, ItemType data2))
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::undoSave(BinaryNode<ItemType>* nodePtr, Stack<ItemType> * undoStack)
 {
-	ItemType oldNodeData;
-	while (!undoStack->isEmpty())
-	{
-		undoStack->pop(oldNodeData);
-		insert(oldNodeData, isGreater);
-	}
-	return;
-
-}
-
-template <class ItemType>
-void BinarySearchTree<ItemType>::clearUndo()
-{
-	ItemType oldNodeData;
-	while(!undoStack->isEmpty())
-	{
-		undoStack->pop(oldNodeData);
-	}
-	return;
-};
-
-
-template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::undoSave(BinaryNode<ItemType>* nodePtr)
-{
-	ItemType oldNodeData;
+	Bike * bike = new Bike;
+	bike = nodePtr->getItem();
 	cout << "item hopefully saved" << endl;
-	oldNodeData = nodePtr->getItem();
-	undoStack->push(oldNodeData);
+	undoStack->push(bike);
 	return deleteNode(nodePtr);
 }
 
 template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType> * nodePtr, ItemType target, bool & success, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> *deleteStack)
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType> * nodePtr, ItemType target, bool & success, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> *deleteStack, Stack<ItemType> * undoStack)
 {
 
 	if (nodePtr == 0)
@@ -120,13 +117,13 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType> *
 		return 0;
 	}
 	if (isGreater(nodePtr->getItem() , target))
-		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack));
+		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack, undoStack));
 	else if (isGreater(target, nodePtr->getItem()))
-		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, isGreater, deleteStack));
+		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, isGreater, deleteStack, undoStack));
 	else
 	{
 		deleteStack->push(nodePtr->getItem());
-		nodePtr = undoSave(nodePtr);
+		nodePtr = undoSave(nodePtr, undoStack);
 		success = true;
 	}
 	return nodePtr;

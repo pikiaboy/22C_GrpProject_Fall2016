@@ -35,6 +35,15 @@ public:
 
 	//operator overload
 
+	Bike(const Bike & bike)
+	{
+		serialNumber = bike.serialNumber;
+		make = bike.make;
+		frameMaterial = bike.frameMaterial;
+		frameSize = bike.frameSize;
+		saddle = bike.saddle;
+	}
+
 	bool operator=(Bike b1) 
 	{
 		serialNumber = b1.serialNumber;
