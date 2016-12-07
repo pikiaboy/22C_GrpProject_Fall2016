@@ -129,7 +129,10 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 		case 'a':
 			about();
 			break;
-
+		case 'S':
+		case 's':
+			bikeHash->hashStats();
+			break;
 		case 'O':
 		case 'o':
 			outputFile(outputFileName, bikeBST, undoStackSerial, undoStackMake);

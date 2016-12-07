@@ -50,6 +50,7 @@ public:
 
 	};
 
+	void hashStats();
 	//print hash
 	void hashPrint();
 	// insert function
@@ -81,6 +82,24 @@ public:
 	};
 
 };
+
+template <class ItemType>
+void HashList<ItemType>::hashStats()
+{
+	ListNode * holder;
+	float full = 0.0;
+	float loadFactor;
+
+	for (int i=0; i< tableSize; i++)
+	{
+		if (hashTable[i] != NULL)
+			full++;
+	}
+
+	loadFactor = (full / tableSize) * 100;
+	cout << setprecision(4) << "The load factor is: " << loadFactor << "%" << endl;
+
+}
 
 template<class ItemType>
 void HashList<ItemType>::hashPrint()
