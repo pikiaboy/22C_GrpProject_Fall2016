@@ -188,7 +188,7 @@ void remove(BinarySearchTree<Bike*>* bikenarySearchTree, HashList<Bike> *bikeHas
 	//bikeHash->hashSearch(x.getSerialNumber());
 
 	//Remove by Serial
-	if (bikenarySearchTree->remove(&removeBike, isGreaterSerial))
+	if (bikenarySearchTree->remove(removeBike, isGreaterSerial))
 		cout << "Deleted" << endl;
 	else
 		cout << "Error in deleting" << endl;
@@ -205,7 +205,7 @@ void removeSecondaryKey(BinarySearchTree<Bike*>* bikeMakeSt)
 
 	removeBike->setMake(target);
 
-	while(bikeMakeSt->remove(&removeBike, isGreaterMake))
+	while(bikeMakeSt->remove(removeBike, isGreaterMake))
 	{
 		cout << "Item deleted." << endl;
 	}
@@ -231,8 +231,8 @@ void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike
 
 		Bike* bicicleta = new Bike(serialNumber, make, frameMaterial, frameSize, saddle);
 
-		bikenarySearchTree->insert(&bicicleta, isGreaterSerial);
-		bikeMakeSt->insert(&bicicleta, isGreaterMake);
+		bikenarySearchTree->insert(bicicleta, isGreaterSerial);
+		bikeMakeSt->insert(bicicleta, isGreaterMake);
 
 		//bikeHash->hashInsert(bicicleta->getSerialNumber(), bicicleta);
 	};
