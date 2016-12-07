@@ -1,7 +1,7 @@
 15284		Firmstrong	Aluminium	17 Leather-Saddle
 G0178		GT		Steel		20 bio-morphic-Saddle
 NKI00304	Nishiki		Steel		16 Comfort-Saddle-Saddle
-02159280	Diamondback	Aluminium	16 Race-Saddle
+02159281	Diamondback	Aluminium	16 Race-Saddle
 32025		Kent		Steel		10 Vinyl-Saddle
 G0178		GT		Alloy		19 Bio-morphic-Saddle
 02153160	Diamondback	Steel		21 Deluxe-Hybrid-Saddle
