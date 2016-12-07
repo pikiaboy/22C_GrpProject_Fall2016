@@ -114,24 +114,36 @@ void HashList<ItemType>::hashDelete(int key)
 	ListNode *holder = hashTable[hashVal];
 	ListNode *prev = NULL;
 
-	// if empty or key is not equal to serial number then show messages
-	if (holder == NULL || holder->data->getSerialNumber() != key)
+	// if index is empty then show message 
+	if (holder == NULL) // || holder->data->getSerialNumber() != key)
 	{
 		cout << "Nothing to delete." << endl;
 	}
 
 	// loop until end of linked list or if key matches up
-	while (holder->next != NULL || holder->data->getSerialNumber() != key)
+	while (holder->next != NULL && holder->data->getSerialNumber() != key)
 	{
 		prev = holder;
 		holder = holder->next;
 	}
+	
+	// if deleting holder and holder is head, make new listnode ptr which points to holder->next. 
+	// delete holder. then make index in hashtable equal to entry ptr.
+	// not sure if we should delete holder before setting new hashIndex first node or after. 
+	if (prev == NULL)
+	{
+		ListNode *entry = holder->next;
+		delete holder;
+		hashTable[hashVal] = entry;
+	}
+	
 	// if there is a node before, then make the next node points to the node after holder. skips holder. then deletes holder
 	if (prev != NULL)
 	{
 		prev->next = holder->next;
+		delete holder;
 	}
-	delete holder;
+	
 
 };
 
