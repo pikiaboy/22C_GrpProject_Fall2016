@@ -63,14 +63,13 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 {
 	if (nodePtr == 0)
 		return newNodePtr;
-	else if (isGreater(*newNodePtr->getItem(), *nodePtr->getItem()))
+	else if (isGreater(*nodePtr->getItem(), *newNodePtr->getItem()))
 	{
-		nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, isGreater));
+		nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, isGreater));
 	}
 	else
 	{
-
-		nodePtr->setLeftPtr(_insert(nodePtr->getLeftPtr(), newNodePtr, isGreater));
+		nodePtr->setRightPtr(_insert(nodePtr->getRightPtr(), newNodePtr, isGreater));
 	}
 	return nodePtr;
 
