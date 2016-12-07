@@ -32,14 +32,14 @@ bool isGreaterEqualMake(Bike* obj1, Bike* obj2)
 }
 
 
-void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike> *bikeHash, string);
+void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*> *bikeHash, string);
 void outputFile(string, BinarySearchTree<Bike*>*, string, Stack<Bike*>*, Stack<Bike*>*);
-void remove(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*,  HashList<Bike> *bikeHash, Stack<Bike*>*, Stack<Bike*>*);
+void remove(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*,  HashList<Bike*> *bikeHash, Stack<Bike*>*, Stack<Bike*>*);
 //void removeSecondaryKey(BinarySearchTree<Bike*>* bikeMakeSt, BinarySearchTree<Bike*>* bikeSerialSt, Stack<Bike*> * undoStackMake, Stack<Bike*> * undoStackSerial);
 void about();
 void undo(Stack<Bike*> *, Stack<Bike*>*, BinarySearchTree<Bike*> *, BinarySearchTree<Bike*>*);
 void undoClear(Stack<Bike*>*, Stack<Bike*>*);
-void menu(string, BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike>*, Stack<Bike*>*, Stack<Bike*>*);
+void menu(string, BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*>*, Stack<Bike*>*, Stack<Bike*>*);
 void options();
 
 int main()
@@ -48,7 +48,7 @@ int main()
 	BinarySearchTree<Bike*> * bikeMakeSt = new BinarySearchTree<Bike*>;
 	Stack<Bike*> *undoStackSerial = new Stack<Bike*>;
 	Stack<Bike*> *undoStackMake = new Stack<Bike*>;
-	HashList<Bike> *bikeHash = new HashList<Bike>;
+	HashList<Bike*> *bikeHash = new HashList<Bike*>;
 	ifstream inFile;
 	const char inputFileName[] = "InputData.txt";
 	const char outputFileName[] = "OutputData.txt";
@@ -56,14 +56,15 @@ int main()
 	readFile(bikeST, bikeMakeSt, bikeHash, inputFileName);
 
 
+	bikeHash->hashPrint();
 	int x = 279; 
 	
 	//This must be done in order to check if passed the serach
 	Bike bikes;
-	//Bike * _bikes = &bikes;
-	//bikeHash->hashSearch(279,_bikes);
+	Bike * _bikes = &bikes;
+	bikeHash->hashSearch(279,_bikes);
 
-	//cout << _bikes->getSerialString() << endl;
+	cout << _bikes->getSerialString() << endl;
 
 	menu(outputFileName, bikeST, bikeMakeSt, bikeHash, undoStackSerial, undoStackMake);
 
@@ -86,7 +87,7 @@ void options()
 	cout << "Q - Quit" << endl;
 }
 
-void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchTree<Bike*> *bikeMakeST, HashList<Bike> *bikeHash, Stack<Bike*> *undoStackSerial, Stack<Bike*> *undoStackMake)
+void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchTree<Bike*> *bikeMakeST, HashList<Bike*> *bikeHash, Stack<Bike*> *undoStackSerial, Stack<Bike*> *undoStackMake)
 {
 	string outFile = "output.txt";
 	char choice = ' ';
@@ -194,7 +195,7 @@ void outputFile(string outputFileName, BinarySearchTree<Bike*>* bikenarySearchTr
 //Remove should remove from the Hash too correct?
 // get the bike
 // detele from hash and bst and bst
-void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>* bikeMakeTree,HashList<Bike> *bikeHash, Stack<Bike*>* undoStackSerial, Stack<Bike*>* undoStackMake)
+void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>* bikeMakeTree,HashList<Bike*> *bikeHash, Stack<Bike*>* undoStackSerial, Stack<Bike*>* undoStackMake)
 {
 	Stack<Bike*> *deleteStack = new Stack<Bike*>;
 
@@ -251,7 +252,7 @@ void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>
 //
 //}
 
-void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*> * bikeMakeSt, HashList<Bike> *bikeHash, string inputFileName)
+void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*> * bikeMakeSt, HashList<Bike*> *bikeHash, string inputFileName)
 {
 	string serialNumber, make, frameMaterial, frameSize, saddle;
 
@@ -274,7 +275,7 @@ void readFile(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike
 		bikenarySearchTree->insert(bicicleta, isGreaterSerial);
 		bikeMakeSt->insert(bicicleta, isGreaterMake);
 
-		//bikeHash->hashInsert(bicicleta->getSerialNumber(), bicicleta);
+		bikeHash->hashInsert(bicicleta->getSerialNumber(), bicicleta);
 	};
 
 	cout << "Compelted File input!" << endl;
