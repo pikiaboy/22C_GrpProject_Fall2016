@@ -35,11 +35,6 @@ public:
 
 	//operator overload
 
-	bool operator==(const Bike &b1)
-	{
-		return ((serialNumber == b1.serialNumber) || (make == b1.make));
-	}
-
 	bool operator=(Bike b1) 
 	{
 		serialNumber = b1.serialNumber;
