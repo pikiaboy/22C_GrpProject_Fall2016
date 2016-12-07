@@ -35,9 +35,13 @@ public:
 
 	//operator overload
 
-	bool operator==(const Bike &b1)
+	Bike(const Bike & bike)
 	{
-		return ((serialNumber == b1.serialNumber) || (make == b1.make));
+		serialNumber = bike.serialNumber;
+		make = bike.make;
+		frameMaterial = bike.frameMaterial;
+		frameSize = bike.frameSize;
+		saddle = bike.saddle;
 	}
 
 	bool operator=(Bike b1) 
