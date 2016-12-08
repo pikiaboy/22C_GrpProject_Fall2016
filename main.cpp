@@ -42,6 +42,11 @@ bool isEqualMake(Bike* obj1, Bike* obj2)
 	return (obj1->getMake() == obj2->getMake());
 }
 
+bool isEqualSerial(Bike *obj1, Bike* obj2)
+{
+	return (obj1->getSerialString() == obj2->getSerialString());
+}
+
 
 void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*> *bikeHash, string);
 void outputFile(string, BinarySearchTree<Bike*>*, Stack<Bike*>*, Stack<Bike*>*);
@@ -119,11 +124,11 @@ void options()
 	cout << "R - Print Hash Table" << endl;
 	cout << "D - Delete a node from BST and Hash" << endl;
 	cout << "E - Delete a from BST and Hash based on Secondary Key" << endl;
-	cout << "T - Hash Serach" << endl;
+	cout << "T - Hash Search" << endl;
 	cout << "S - Hash Statistics" << endl;
 	cout << "U - Undo Delete since last save" << endl;
 	cout << "O - Save BST and Hash to output.txt" << endl;
-	cout << "C - Serach the BST or Hash" << endl;
+	cout << "C - Serach the BST by Bike make" << endl;
 	cout << "A - About the Devs" << endl;
 	cout << "H - Help" << endl;
 	cout << "Q - Quit" << endl;
@@ -135,10 +140,11 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 
 	//display options
 	options();
-	cout << ">> ";
+
 	
 	while (choice != 'Q' || choice != 'q')
 	{
+		cout << ">> ";
 		cin >> choice; 
 		switch (choice)
 		{
@@ -195,7 +201,7 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 		case 'q':
 			exit(111);
 			break;
-
+		cout << endl;
 		}
 	}
 
@@ -205,15 +211,19 @@ void search(BinarySearchTree<Bike*>* bikeMakeST)
 {
 	Queue<Bike*> * bikeQueue = new Queue<Bike*>;
 	string target;
+	bool stillSearching = true;
 	cout << "What bike make would you like to search?" << endl;
 	cin >> target;
 
 	Bike *searchBikeMake = new Bike();
 	searchBikeMake->setMake(target);
-	bikeMakeST->findNode(searchBikeMake, isGreaterMake, )
 
+	cout << "Here are your bikes: " << endl;
 
-
+	while(stillSearching)
+	{
+		stillSearching = bikeMakeST->findNode(searchBikeMake, isGreaterMake, isEqualMake, isEqualSerial, bikeQueue);
+	}
 }
 
 void about()

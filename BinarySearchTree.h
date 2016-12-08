@@ -17,7 +17,7 @@ private:
 	BinaryNode<ItemType>* _insert(BinaryNode<ItemType>* nodePtr, BinaryNode<ItemType>* newNodePtr, bool isGreater(ItemType data1, ItemType data2));
 	BinaryNode<ItemType>* _remove(BinaryNode<ItemType>* nodePtr, ItemType target, bool & success, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType>* deleteStack, Stack<ItemType> * undoStack);
 	BinaryNode<ItemType>* deleteNode(BinaryNode<ItemType>* targetNodePtr);
-	BinaryNode<ItemType>* _findNode(BinaryNode<ItemType>* treePtr, ItemType * target, bool isGreater(ItemType data1, ItemType data2), bool isEqual(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue) const;
+	BinaryNode<ItemType>* _findNode(BinaryNode<ItemType>* treePtr, ItemType  target, bool isGreater(ItemType data1, ItemType data2), bool isEqualMake(ItemType data1, ItemType data2), bool isEqualSerial(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue);
 	BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* nodePtr,
 		ItemType * successor);
 	bool inQueue(ItemType item, Queue<ItemType>*foundQueue, bool isEqual(ItemType data1, ItemType data2));
@@ -32,7 +32,7 @@ public:
 	//void undo(bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * undoStack);
 	bool insert(ItemType newEntry, bool isGreater(ItemType data1, ItemType data2));
 	bool remove(ItemType target, bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * deleteStack, Stack<ItemType> * undoStack);
-	bool findNode(ItemType target, bool isGreater(ItemType data1, ItemType data2),  bool isEqual(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue);
+	bool findNode(ItemType target, bool isGreater(ItemType data1, ItemType data2), bool isEqualMake(ItemType data1, ItemType data2), bool isEqualSerial(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue);
 	//void clearUndo(Stack<ItemType> * undoStack);
 
 };
@@ -158,27 +158,28 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<
 }
 
 template<class ItemType>
-BinaryNode<ItemType>* BinarySearchTree<ItemType>::_findNode(BinaryNode<ItemType>* treePtr, ItemType * target, bool isGreater(ItemType data1, ItemType data2), bool isEqual(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue) const
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::_findNode(BinaryNode<ItemType>* nodePtr, ItemType  target, bool isGreater(ItemType data1, ItemType data2), bool isEqualMake(ItemType data1, ItemType data2), bool isEqualSerial(ItemType data1, ItemType data2), Queue<ItemType> * foundQueue)
 {
 	if (nodePtr == 0)
 		return 0;
-	if (isEqual(nodePtr->getItem(), target) && !inQueue(target, foundQueue, isEqual))
+	if (isEqualMake(nodePtr->getItem(), target) && !(inQueue(nodePtr->getItem(), foundQueue, isEqualSerial)))
 		return nodePtr;
-	if (isGreater(target, nodePtr->getItem()))
-		return _findNode(nodePtr->getRightPtr(), target, isGreater, isEqual, foundQueue);
-	return _findNode(nodePtr->getRightPtr(), target, isGreater, isEqual, foundQueue);
+	if (isGreater(nodePtr->getItem(), target))
+		return _findNode(nodePtr->getLeftPtr(), target, isGreater, isEqualMake, isEqualSerial, foundQueue);
+	return _findNode(nodePtr->getRightPtr(), target, isGreater, isEqualMake, isEqualSerial, foundQueue);
 }
 
 template <class ItemType>
-bool BinarySearchTree<ItemType>::findNode(ItemType target, bool isGreater(ItemType data1, ItemType data2), bool isEqual(ItemType data1, ItemType data2), Queue<ItemType>* foundQueue)
+bool BinarySearchTree<ItemType>::findNode(ItemType target, bool isGreater(ItemType data1, ItemType data2), bool isEqualMake(ItemType data1, ItemType data2), bool isEqualSerial(ItemType data1, ItemType data2), Queue<ItemType>* foundQueue)
 {
 	bool isSuccessful = false;
+	BinaryNode<Bike*> *bikeNode = 0;
 	Bike * bike = new Bike;
-	bike = _findNode(this->rootPtr, target, isGreater, isEqual, foundQueue);
-	if(bike != 0)
+	bikeNode = _findNode(this->rootPtr, target, isGreater, isEqualMake, isEqualSerial, foundQueue);
+	if(bikeNode != 0)
 	{	
-		bike = bike->getItem();
-		cout << bike->getSerialString() << " " << bike->getMake();
+		bike = bikeNode->getItem();
+		cout << bike->getSerialString() << " " << bike->getMake() << endl;
 		foundQueue->enqueue(bike);
 		return true;
 	}
@@ -186,19 +187,21 @@ bool BinarySearchTree<ItemType>::findNode(ItemType target, bool isGreater(ItemTy
 }
 
 template <class ItemType>
-bool BinarySearchTree<ItemType>::inQueue(ItemType item, Queue<ItemType>* foundQueue, bool isEqual(ItemType data1, ItemType data2))
+bool BinarySearchTree<ItemType>::inQueue(ItemType item, Queue<ItemType>* foundQueue, bool isEqualSerial(ItemType data1, ItemType data2))
 {
+	bool inTheQueue = false;
 	if (foundQueue->isEmpty())
-		return false;
+		return inTheQueue;
 	Bike* bike = new Bike();
 	for(int i = 0; i < foundQueue->getCount(); i++)
 	{
 		foundQueue->dequeue(bike);
-		if (isEqual(item, bike))
-			return true;
+		if (isEqualSerial(item, bike))
+			inTheQueue = true;
 		foundQueue->enqueue(bike);
+	
 	}
-	return false;
+	return inTheQueue;
 }
 
 

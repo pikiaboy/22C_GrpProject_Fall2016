@@ -3,7 +3,7 @@ G0178		GT		Steel		20 bio-morphic-Saddle
 NKI00304	Nishiki		Steel		16 Comfort-Saddle-Saddle
 02159281	Diamondback	Aluminium	16 Race-Saddle
 32025		Kent		Steel		10 Vinyl-Saddle
-G0178		GT		Alloy		19 Bio-morphic-Saddle
+G0179		GT		Alloy		19 Bio-morphic-Saddle
 02153160	Diamondback	Steel		21 Deluxe-Hybrid-Saddle
 26745		Huffy		Steel		18 Comfort-Saddle
 66336		Huffy		Steel		18 Padded-Saddle
@@ -16,7 +16,7 @@ NKI00104	Nishiki		Steel		16 Sport-Saddle
 1170		Firmstrong	Steel		19 Spring-Saddle
 02165070	Diamondback	Alloy		20 Padded-Saddle
 G0136DSG	GT		Aluminium	13 GT-MTB
-26645		Huffy		Steel		18 Spring-Saddle
+26646		Huffy		Steel		18 Spring-Saddle
 1153		Firmstrong	Alloy		19 Cruiser-Saddle   
 02172130	Diamondback	Aluminium	16 Race-Saddle
 26645		Huffy		Steel		18 Spring-Saddle
