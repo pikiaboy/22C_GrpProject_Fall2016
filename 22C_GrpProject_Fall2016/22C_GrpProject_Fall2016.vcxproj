@@ -115,7 +115,6 @@
     <ClInclude Include="..\BinarySearchTree.h" />
     <ClInclude Include="..\BinaryTree.h" />
     <ClInclude Include="..\HashHead.h" />
-    <ClInclude Include="..\HashTable.h" />
     <ClInclude Include="..\Queue.h" />
     <ClInclude Include="..\Stack.h" />
   </ItemGroup>

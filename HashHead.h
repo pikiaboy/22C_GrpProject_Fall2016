@@ -10,6 +10,7 @@
 #ifndef HashHead_h
 #define HashHead_h
 #include <iostream>
+#include <iomanip>
 
 // table size
 const int tableSize = 53;
@@ -48,8 +49,12 @@ public:
 		}
 
 	};
+<<<<<<< HEAD
 	
 	// computes hash results
+=======
+
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 	void hashStats();
 	//print hash
 	void hashPrint();
@@ -98,6 +103,7 @@ void HashList<ItemType>::hashStats()
 
 	loadFactor = (full / tableSize) * 100;
 	cout << setprecision(4) << "The load factor is: " << loadFactor << "%" << endl;
+<<<<<<< HEAD
     
     float maxLength = 0;
     float totalLengths =0;
@@ -130,6 +136,9 @@ void HashList<ItemType>::hashStats()
     cout << "Total nodes: " << totalLengths << endl;
     cout << "Total number of filled indexes: " << filledIndex << endl;
     cout << "Average length of a index is: " << average << endl;
+=======
+
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 }
 
 template<class ItemType>
@@ -141,10 +150,11 @@ void HashList<ItemType>::hashPrint()
 	for (int i = 0; i < tableSize; i++)
 	{
 		holder = hashTable[i];
-
+		cout << setw(5) << i << ": ";
 		while (holder != NULL)
 		{
 			cout << "Bike: ";
+<<<<<<< HEAD
 			cout << holder->data->getSerialString() << " ";
 			cout << holder->data->getMake();
 			cout << endl;
@@ -154,6 +164,18 @@ void HashList<ItemType>::hashPrint()
 			count++;
 >>>>>>> 942e65cdf5c19359d6e264088bc47a84c39b35be
 		}
+=======
+			cout << setw(10) << holder->data->getSerialString() << " ";
+			cout << setw(15) << holder->data->getMake() << " |";
+			if(holder->next != 0)
+			{
+				cout << " --> "; 
+			}
+			holder = holder->next;
+			count++;
+		}
+		cout << endl;
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 
 	}
 	cout << "The total nodes is: " << count << endl;
@@ -180,7 +202,11 @@ void HashList<ItemType>::hashDelete(int key)
 		prev = holder;
 		holder = holder->next;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 	// if deleting holder and holder is head, make new listnode ptr which points to holder->next. 
 	// delete holder. then make index in hashtable equal to entry ptr.
 	// not sure if we should delete holder before setting new hashIndex first node or after. 
@@ -190,14 +216,21 @@ void HashList<ItemType>::hashDelete(int key)
 		delete holder;
 		hashTable[hashVal] = entry;
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 	// if there is a node before, then make the next node points to the node after holder. skips holder. then deletes holder
 	if (prev != NULL)
 	{
 		prev->next = holder->next;
 		delete holder;
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> a6759ca99bde2f24e425da9b94afadc3566d21c6
 
 };
 

@@ -71,31 +71,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_insert(BinaryNode<ItemType>* 
 	return nodePtr;
 
 }
-//
-//template<class ItemType>
-//void BinarySearchTree<ItemType>::undo(bool isGreater(ItemType data1, ItemType data2), Stack<ItemType> * undoStack)
-//{
-//	Bike *oldNodeData = new Bike;
-//	while (!undoStack->isEmpty())
-//	{
-//		undoStack->pop(oldNodeData);
-//		insert(oldNodeData, isGreater);
-//	}
-//	return;
-//
-//}
-//
-//template <class ItemType>
-//void BinarySearchTree<ItemType>::clearUndo(Stack<ItemType> * undoStack)
-//{
-//	Bike * oldNodeData = new Bike();
-//	while(!undoStack->isEmpty())
-//	{
-//		undoStack->pop(oldNodeData);
-//	}
-//	return;
-//};
-
 
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::undoSave(BinaryNode<ItemType>* nodePtr, Stack<ItemType> * undoStack)
@@ -116,10 +91,10 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::_remove(BinaryNode<ItemType> *
 		success = false;
 		return 0;
 	}
-	if (isGreater(nodePtr->getItem() , target))
-		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack, undoStack));
-	else if (isGreater(target, nodePtr->getItem()))
+	if (isGreater(target, nodePtr->getItem()))
 		nodePtr->setRightPtr(_remove(nodePtr->getRightPtr(), target, success, isGreater, deleteStack, undoStack));
+	else if (isGreater(nodePtr->getItem() , target))
+		nodePtr->setLeftPtr(_remove(nodePtr->getLeftPtr(), target, success, isGreater, deleteStack, undoStack));
 	else
 	{
 		deleteStack->push(nodePtr->getItem());
