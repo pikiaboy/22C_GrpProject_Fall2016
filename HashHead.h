@@ -212,7 +212,7 @@ bool HashList<ItemType>::hashSearch(int key, ItemType &bikes)
 	while (holder != NULL && found != true)
 	{
 		// if the node serial number matches with the key then print all the info out
-		if (holder->data->getSerialNumber() == key) // this line is full of black magic
+		if (holder->data->getSerialNumber() == key) 
 		{
 			bikes = holder->data;
 			return true;
