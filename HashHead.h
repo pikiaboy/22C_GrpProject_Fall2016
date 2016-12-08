@@ -48,7 +48,9 @@ public:
 		}
 
 	};
-
+	
+	// computes hash results
+	void hashStats();
 	//print hash
 	void hashPrint();
 	// insert function
@@ -80,6 +82,55 @@ public:
 	};
 
 };
+
+template <class ItemType>
+void HashList<ItemType>::hashStats()
+{
+	ListNode * holder;
+	float full = 0.0;
+	float loadFactor;
+
+	for (int i=0; i< tableSize; i++)
+	{
+		if (hashTable[i] != NULL)
+			full++;
+	}
+
+	loadFactor = (full / tableSize) * 100;
+	cout << setprecision(4) << "The load factor is: " << loadFactor << "%" << endl;
+    
+    float maxLength = 0;
+    float totalLengths =0;
+    float filledIndex = 0;
+    
+    for (int i=0; i < tableSize; i++)
+    {
+        float linkedListLength=0;
+        
+        
+        ListNode *counter = hashTable[i];
+        if (counter != NULL)
+            filledIndex++;
+        
+        while(counter != NULL)
+        {
+            linkedListLength++;
+            counter = counter->next;
+        }
+        
+        totalLengths = totalLengths + linkedListLength;
+        
+        if (linkedListLength > maxLength)
+        {
+            maxLength = linkedListLength;
+        }
+    }
+    float average= totalLengths/filledIndex;
+    cout << "The longest linked list: " << maxLength << endl;
+    cout << "Total nodes: " << totalLengths << endl;
+    cout << "Total number of filled indexes: " << filledIndex << endl;
+    cout << "Average length of a index is: " << average << endl;
+}
 
 template<class ItemType>
 void HashList<ItemType>::hashPrint()
