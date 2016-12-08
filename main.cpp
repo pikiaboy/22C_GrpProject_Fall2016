@@ -119,11 +119,11 @@ void options()
 	cout << "R - Print Hash Table" << endl;
 	cout << "D - Delete a node from BST and Hash" << endl;
 	cout << "E - Delete a from BST and Hash based on Secondary Key" << endl;
-	cout << "C - Serach the BST or Hash" << endl;
 	cout << "T - Hash Serach" << endl;
 	cout << "S - Hash Statistics" << endl;
 	cout << "U - Undo Delete since last save" << endl;
 	cout << "O - Save BST and Hash to output.txt" << endl;
+	cout << "C - Serach the BST or Hash" << endl;
 	cout << "A - About the Devs" << endl;
 	cout << "H - Help" << endl;
 	cout << "Q - Quit" << endl;
