@@ -48,7 +48,9 @@ public:
 		}
 
 	};
-
+	
+	// computes hash results
+	void hashStats();
 	//print hash
 	void hashPrint();
 	// insert function
@@ -80,6 +82,55 @@ public:
 	};
 
 };
+
+template <class ItemType>
+void HashList<ItemType>::hashStats()
+{
+	ListNode * holder;
+	float full = 0.0;
+	float loadFactor;
+
+	for (int i=0; i< tableSize; i++)
+	{
+		if (hashTable[i] != NULL)
+			full++;
+	}
+
+	loadFactor = (full / tableSize) * 100;
+	cout << setprecision(4) << "The load factor is: " << loadFactor << "%" << endl;
+    
+    float maxLength = 0;
+    float totalLengths =0;
+    float filledIndex = 0;
+    
+    for (int i=0; i < tableSize; i++)
+    {
+        float linkedListLength=0;
+        
+        
+        ListNode *counter = hashTable[i];
+        if (counter != NULL)
+            filledIndex++;
+        
+        while(counter != NULL)
+        {
+            linkedListLength++;
+            counter = counter->next;
+        }
+        
+        totalLengths = totalLengths + linkedListLength;
+        
+        if (linkedListLength > maxLength)
+        {
+            maxLength = linkedListLength;
+        }
+    }
+    float average= totalLengths/filledIndex;
+    cout << "The longest linked list: " << maxLength << endl;
+    cout << "Total nodes: " << totalLengths << endl;
+    cout << "Total number of filled indexes: " << filledIndex << endl;
+    cout << "Average length of a index is: " << average << endl;
+}
 
 template<class ItemType>
 void HashList<ItemType>::hashPrint()
@@ -117,24 +168,36 @@ void HashList<ItemType>::hashDelete(int key)
 	ListNode *holder = hashTable[hashVal];
 	ListNode *prev = NULL;
 
-	// if empty or key is not equal to serial number then show messages
-	if (holder == NULL || holder->data->getSerialNumber() != key)
+	// if index is empty then show message 
+	if (holder == NULL) // || holder->data->getSerialNumber() != key)
 	{
 		cout << "Nothing to delete." << endl;
 	}
 
 	// loop until end of linked list or if key matches up
-	while (holder->next != NULL || holder->data->getSerialNumber() != key)
+	while (holder->next != NULL && holder->data->getSerialNumber() != key)
 	{
 		prev = holder;
 		holder = holder->next;
 	}
+	
+	// if deleting holder and holder is head, make new listnode ptr which points to holder->next. 
+	// delete holder. then make index in hashtable equal to entry ptr.
+	// not sure if we should delete holder before setting new hashIndex first node or after. 
+	if (prev == NULL)
+	{
+		ListNode *entry = holder->next;
+		delete holder;
+		hashTable[hashVal] = entry;
+	}
+	
 	// if there is a node before, then make the next node points to the node after holder. skips holder. then deletes holder
 	if (prev != NULL)
 	{
 		prev->next = holder->next;
+		delete holder;
 	}
-	delete holder;
+	
 
 };
 
@@ -168,13 +231,14 @@ bool HashList<ItemType>::hashSearch(int key, ItemType &bikes)
 template <class ItemType>
 int HashList<ItemType>::hashFunc(int key)
 {
-	const int hashSize = 53;
-	const int primeA = 29;
-	const int primeB = 3;
-	int address;
-	address = (primeA * key + primeB) % hashSize;
-	return address;
-
+    const int hashSize = 53;
+    const int primeA = 29;
+    const int primeB = 3;
+    const int primeC = 31;
+    int address;
+    address = ((primeA * key + primeB)/primeC) % hashSize;
+    return address;
+    
 }
 
 template <class ItemType>
