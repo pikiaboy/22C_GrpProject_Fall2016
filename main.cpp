@@ -113,8 +113,6 @@ void hashSearch(HashList<Bike*>*bikeHash)
 	}
 	else
 		cout << "Bike not found!" << endl;
-	
-	
 }
 
 void options()

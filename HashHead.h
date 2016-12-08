@@ -34,7 +34,6 @@ private:
 	// hash table pointer
 	ListNode** hashTable;
 
-
 public:
 	// constructor
 	HashList()
@@ -141,16 +140,24 @@ void HashList<ItemType>::hashPrint()
 	for (int i = 0; i < tableSize; i++)
 	{
 		holder = hashTable[i];
+		bool notEmpty = false;
+		cout << "Adress " << i << ": " ;
 
 		while (holder != NULL)
 		{
+			notEmpty = true;
 			cout << "Bike: ";
 			cout << holder->data->getSerialString() << " ";
 			cout << holder->data->getMake();
-			cout << endl;
+			cout << "|->|";
 			holder = holder->next;
 			count++;
 		}
+		if (!notEmpty)
+			cout << "EMPTY";
+		else
+			cout << "End List";
+		cout << endl;
 
 	}
 	cout << "The total nodes is: " << count << endl;
