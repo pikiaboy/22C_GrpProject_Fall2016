@@ -10,7 +10,6 @@
 #ifndef HashHead_h
 #define HashHead_h
 #include <iostream>
-#include <iomanip>
 
 // table size
 const int tableSize = 53;
@@ -50,6 +49,7 @@ public:
 
 	};
 
+	// computes hash results
 	void hashStats();
 	//print hash
 	void hashPrint();
@@ -90,7 +90,7 @@ void HashList<ItemType>::hashStats()
 	float full = 0.0;
 	float loadFactor;
 
-	for (int i=0; i< tableSize; i++)
+	for (int i = 0; i< tableSize; i++)
 	{
 		if (hashTable[i] != NULL)
 			full++;
@@ -99,6 +99,37 @@ void HashList<ItemType>::hashStats()
 	loadFactor = (full / tableSize) * 100;
 	cout << setprecision(4) << "The load factor is: " << loadFactor << "%" << endl;
 
+	float maxLength = 0;
+	float totalLengths = 0;
+	float filledIndex = 0;
+
+	for (int i = 0; i < tableSize; i++)
+	{
+		float linkedListLength = 0;
+
+
+		ListNode *counter = hashTable[i];
+		if (counter != NULL)
+			filledIndex++;
+
+		while (counter != NULL)
+		{
+			linkedListLength++;
+			counter = counter->next;
+		}
+
+		totalLengths = totalLengths + linkedListLength;
+
+		if (linkedListLength > maxLength)
+		{
+			maxLength = linkedListLength;
+		}
+	}
+	float average = totalLengths / filledIndex;
+	cout << "The longest linked list: " << maxLength << endl;
+	cout << "Total nodes: " << totalLengths << endl;
+	cout << "Total number of filled indexes: " << filledIndex << endl;
+	cout << "Average length of a index is: " << average << endl;
 }
 
 template<class ItemType>
@@ -110,20 +141,16 @@ void HashList<ItemType>::hashPrint()
 	for (int i = 0; i < tableSize; i++)
 	{
 		holder = hashTable[i];
-		cout << setw(5) << i << ": ";
+
 		while (holder != NULL)
 		{
 			cout << "Bike: ";
-			cout << setw(10) << holder->data->getSerialString() << " ";
-			cout << setw(15) << holder->data->getMake() << " |";
-			if(holder->next != 0)
-			{
-				cout << " --> "; 
-			}
+			cout << holder->data->getSerialString() << " ";
+			cout << holder->data->getMake();
+			cout << endl;
 			holder = holder->next;
 			count++;
 		}
-		cout << endl;
 
 	}
 	cout << "The total nodes is: " << count << endl;
@@ -168,6 +195,7 @@ void HashList<ItemType>::hashDelete(int key)
 		delete holder;
 	}
 
+
 };
 
 //changed to return an item instead of cout'ing everything
@@ -203,8 +231,9 @@ int HashList<ItemType>::hashFunc(int key)
 	const int hashSize = 53;
 	const int primeA = 29;
 	const int primeB = 3;
+	const int primeC = 31;
 	int address;
-	address = (primeA * key + primeB) % hashSize;
+	address = ((primeA * key + primeB) / primeC) % hashSize;
 	return address;
 
 }
