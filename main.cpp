@@ -37,6 +37,11 @@ bool isGreaterEqualMake(Bike* obj1, Bike* obj2)
 	return(obj1->getMake() > obj2->getMake());
 }
 
+bool isEqualMake(Bike* obj1, Bike* obj2)
+{
+	return (obj1->getMake() == obj2->getMake());
+}
+
 
 void readFile(BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*> *bikeHash, string);
 void outputFile(string, BinarySearchTree<Bike*>*, Stack<Bike*>*, Stack<Bike*>*);
@@ -46,6 +51,7 @@ void about();
 void undo(Stack<Bike*> *, Stack<Bike*>*, BinarySearchTree<Bike*> *, BinarySearchTree<Bike*>*, HashList<Bike*> *);
 void undoClear(Stack<Bike*>*, Stack<Bike*>*);
 void menu(string, BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<Bike*>*, Stack<Bike*>*, Stack<Bike*>*);
+void search(BinarySearchTree<Bike*>*);
 void options();
 
 int main()
@@ -87,7 +93,7 @@ void options()
 	cout << "O - Save BST and Hash to output.txt" << endl;
 	cout << "D - Delete a node from BST and Hash" << endl;
 	cout << "E - Delete a from BST and Hash based on Secondary Key" << endl;
-	cout << "S - Serach the BST or Hash" << endl;
+	cout << "C - Serach the BST or Hash" << endl;
 	cout << "A - About the Devs" << endl;
 	cout << "U - Undo Delete since last save" << endl;
 	cout << "H - Help" << endl;
@@ -124,7 +130,10 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 			cout << "Secondary Key: " << endl;
 			bikeMakeST->printInorderIndented();
 			break;
-
+		case 'c':
+		case 'C':
+			search(bikeMakeST);
+			break;
 		case 'A' :
 		case 'a':
 			about();
@@ -156,6 +165,21 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 
 		}
 	}
+
+}
+
+void search(BinarySearchTree<Bike*>* bikeMakeST)
+{
+	Queue<Bike*> * bikeQueue = new Queue<Bike*>;
+	string target;
+	cout << "What bike make would you like to search?" << endl;
+	cin >> target;
+
+	Bike *searchBikeMake = new Bike();
+	searchBikeMake->setMake(target);
+	bikeMakeST->findNode(searchBikeMake, isGreaterMake, )
+
+
 
 }
 
