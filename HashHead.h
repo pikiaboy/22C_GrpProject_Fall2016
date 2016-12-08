@@ -97,7 +97,9 @@ void HashList<ItemType>::hashPrint()
 			cout << holder->data->getSerialString();
 			cout << holder->data->getMake();
 			cout << endl;
+			holder = holder->next;
 		}
+
 	}
 }
 
