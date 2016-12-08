@@ -177,13 +177,14 @@ bool HashList<ItemType>::hashSearch(int key, ItemType &bikes)
 template <class ItemType>
 int HashList<ItemType>::hashFunc(int key)
 {
-	const int hashSize = 53;
-	const int primeA = 29;
-	const int primeB = 3;
-	int address;
-	address = (primeA * key + primeB) % hashSize;
-	return address;
-
+    const int hashSize = 53;
+    const int primeA = 29;
+    const int primeB = 3;
+    const int primeC = 31;
+    int address;
+    address = ((primeA * key + primeB)/primeC) % hashSize;
+    return address;
+    
 }
 
 template <class ItemType>
