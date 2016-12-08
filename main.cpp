@@ -54,6 +54,8 @@ void menu(string, BinarySearchTree<Bike*>*, BinarySearchTree<Bike*>*, HashList<B
 void search(BinarySearchTree<Bike*>*);
 void options();
 
+void hashSearch(HashList<Bike*>*);
+
 int main()
 {
 	BinarySearchTree<Bike*> * bikeST = new BinarySearchTree<Bike*>;
@@ -67,15 +69,7 @@ int main()
 
 	readFile(bikeST, bikeMakeSt, bikeHash, inputFileName);
 
-/*
-	int x = 279; */
-	
-	//This must be done in order to check if passed the serach
-	Bike bikes;
-	Bike * _bikes = &bikes;
-	bikeHash->hashSearch(279,_bikes);
 
-	cout << _bikes->getSerialString() << endl;
 
 	menu(outputFileName, bikeST, bikeMakeSt, bikeHash, undoStackSerial, undoStackMake);
 
@@ -85,17 +79,52 @@ int main()
 	return 0;
 }
 
+void hashSearch(HashList<Bike*>*bikeHash)
+{
+	string target;
+	int serialNumber = 0;
+
+	Bike bikes;
+	Bike * _bikes = &bikes;
+
+	cout << "Please enter in the serial key to search: ";
+	cin >> target;
+
+	//converting the target into ASCII values
+	for (int i = 0; i < target.length(); i++)
+	{
+		serialNumber += target[i];
+	}
+
+	if (bikeHash->hashSearch(serialNumber, _bikes))
+	{
+		cout << "Bike found!" << endl;
+		cout << "Serial Num: " << _bikes->getSerialString() << endl;
+		cout << "Make: " << _bikes->getMake() << endl;
+		cout << "Frame Material: " << _bikes->getFrameMaterial() << endl;
+		cout << "Frame Size: " << _bikes->getFrameSize() << endl;
+		cout << "Saddle Type: " << _bikes->getSaddle() << endl;
+		cout << "************************************" << endl;
+	}
+	else
+		cout << "Bike not found!" << endl;
+	
+	
+}
+
 void options()
 {
 	cout << "~^&~!Please enter in a choice~^&~!" << endl;
 	cout << "P - Print BST as indented list to screen" << endl;
 	cout << "R - Print Hash Table" << endl;
-	cout << "O - Save BST and Hash to output.txt" << endl;
 	cout << "D - Delete a node from BST and Hash" << endl;
 	cout << "E - Delete a from BST and Hash based on Secondary Key" << endl;
 	cout << "C - Serach the BST or Hash" << endl;
-	cout << "A - About the Devs" << endl;
+	cout << "T - Hash Serach" << endl;
+	cout << "S - Hash Statistics" << endl;
 	cout << "U - Undo Delete since last save" << endl;
+	cout << "O - Save BST and Hash to output.txt" << endl;
+	cout << "A - About the Devs" << endl;
 	cout << "H - Help" << endl;
 	cout << "Q - Quit" << endl;
 }
@@ -113,6 +142,10 @@ void menu(string outputFileName, BinarySearchTree<Bike*> *bikeBST, BinarySearchT
 		cin >> choice; 
 		switch (choice)
 		{
+		case'T':
+		case 't':
+			hashSearch(bikeHash);
+			break;
 		case 'H':
 		case 'h':
 			options();
@@ -240,7 +273,6 @@ void remove(BinarySearchTree<Bike*>* bikenarySearchTree, BinarySearchTree<Bike*>
 	cout << "What would you like to remove?" << endl;
 	cin >> target;
 
-	//bikeHash->hashSearch(x.getSerialNumber());
 
 	//Remove by Serial
 	Bike *removeBikeSerial = new Bike();
